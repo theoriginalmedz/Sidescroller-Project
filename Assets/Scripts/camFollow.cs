@@ -6,8 +6,10 @@ public class camFollow : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public float offset;
+    
     private Transform playerTrans;
+    public float xAxis;
+    public float yAxis;
 
     void Start()
     {
@@ -22,8 +24,8 @@ public class camFollow : MonoBehaviour
         tempPos.x = playerTrans.position.x;
         tempPos.y = playerTrans.position.y;
 
-        tempPos.x += offset;
-        tempPos.y += offset;
+        tempPos.x += xAxis;
+        tempPos.y += yAxis;
 
 
         transform.position = tempPos;

@@ -19,6 +19,13 @@ public class PlayerMovement : MonoBehaviour
      Animator playerAnim; //The Animator for player animations
      bool RightFacing; //True or false statement to see which direction player is facing 
 
+    //for shooting gun
+
+    public Transform gunMuzzle;
+    public GameObject bullet;
+    float fireRate = 1f; //rate of fire for weapon
+    float nextTime = 0.5f; //time to wait to shoot next
+    float ammoCount = 30f; //ammo count
    
     void Start()
     {
@@ -34,6 +41,13 @@ public class PlayerMovement : MonoBehaviour
         {
             playerAnim.SetBool("isGrounded",grounded); //checks to see if grounded is false
             rb2D.AddForce(new Vector2(0, jumpHeight)); //allows the player to jump
+        }
+
+        //player shooting codes
+
+        if (Input.GetAxisRaw("Fire1") > 0) fireBullet();
+        {
+
         }
 
      }   
@@ -69,5 +83,21 @@ public class PlayerMovement : MonoBehaviour
         playerScale.x *= -1; //Takes the player's scale value and multiplies by negative 1 to face them left;
         transform.localScale = playerScale;
     }
+
+    void fireBullet()
+    {
+        if (Time.time > nextTime)
+        {
+            nextTime = Time.time + fireRate;
+            if (RightFacing)
+            {
+                Instantiate(bullet, gunMuzzle.position, Quaternion.Euler(new Vector3(0, 0, 0))); //instantiates the bullet prefab
+            } else if (!RightFacing)
+            { Instantiate(bullet, gunMuzzle.position, Quaternion.Euler(new Vector3(0, 0, 180))); //instantiates the bullet prefab for left side
+
+            }
+        }
+    }
+
 }
 
